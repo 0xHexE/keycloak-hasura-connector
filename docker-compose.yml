@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   auth:
-    image: httpsomkar/keycloak-hasura-connector
+    image: httpsomkar/keycloak-hasura-connector:latest
     environment:
       KEYCLOAK_CLIENT_ID: CLIENT_ID
       KEYCLOAK_SERVER_URL: KEYCLOAK_URL
