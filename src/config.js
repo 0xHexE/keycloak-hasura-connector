@@ -31,7 +31,7 @@ const config = convict({
         serverUrl: {
             doc: 'Keycloak server url',
             format: String,
-            default: 'https://accounts.f4erp.com/auth',
+            default: null,
             env: 'KEYCLOAK_SERVER_URL',
         },
         realm: {
