@@ -1,0 +1,28 @@
+{
+  "name": "sanwad-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/httpsOmkar/sanwad-back.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/httpsOmkar/sanwad-back/issues"
+  },
+  "homepage": "https://github.com/httpsOmkar/sanwad-back#readme",
+  "dependencies": {
+    "convict": "^4.4.1",
+    "express": "^4.16.4",
+    "keycloak-connect": "^4.8.3"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5"
+  }
+}
