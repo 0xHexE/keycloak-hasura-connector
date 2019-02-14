@@ -10,10 +10,10 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
     const tokenContent = res.kauth.grant.access_token.content;
 
-    const organizationId = tokenContent.group
-        .sort((v1, v2) => v1.split('/').length - v2.split('/').length)[0].split('/')[1];
+    const organizationId = `${ (tokenContent.group || [])
+        .sort((v1, v2) => v1.split('/').length - v2.split('/').length)[0] }`.split('/')[1];
 
-    const subGroups = tokenContent.group.map(res => res.replace(`/${ organizationId }`, '')).join(',');
+    const subGroups = (tokenContent.group || []).map(res => res.replace(`/${ organizationId }`, '')).join(',');
 
     const hasuraVariables = {
         'X-Hasura-Role': (tokenContent.resource_access[config.get('kcConfig.clientId')] || {roles: []}).roles.join(','),

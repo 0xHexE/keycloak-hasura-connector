@@ -1,8 +1,17 @@
 # keycloak-hasura-connector
-Connect hasura with the keycloak
+Connect hasura with the keycloak. Project support multiple organization setup in order to achieve that you need to add the groups to the scope of the application.
+
+# Groups setup
+
+To achieve the multiple organization setup you need to add to the groups like
+```
+/ORGANIZATION_ID/subGroup
+```
 
 # Installation
 `docker pull keycloak-hasura-connector`
+
+# Setup Keycloak
 
 # Docker compose
 To use the hasura and keycloak image you use the `docker-compose.yml` file. Edit the environment variables.
