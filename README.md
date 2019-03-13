@@ -50,6 +50,13 @@ KEYCLOAK_SECRET: SECRET COPIED FROM THE STEP 4
 And run
 `docker-compose up -d`
 
+## Setup Hasura
+https://docs.hasura.io/1.0/graphql/manual/auth/common-roles-auth-examples.html
+
+You can refere documentation here
+
+![Alt text](screenshots/downloaded-from-hasura.png?raw=true "Title")
+
 ## Kubernates
 
 You can use the postgres chart to deploy the postgres to kubernates. You can convert the docker-compose into kubernates file using the kompose
