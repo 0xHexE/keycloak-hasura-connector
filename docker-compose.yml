@@ -24,6 +24,7 @@ services:
     restart: always
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_TELEMETRY: "false" # https://docs.hasura.io/1.0/graphql/manual/guides/telemetry.html
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       HASURA_GRAPHQL_ADMIN_SECRET: mysecretaccesskey
       HASURA_GRAPHQL_AUTH_HOOK: http://auth:3000
