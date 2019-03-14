@@ -51,11 +51,45 @@ And run
 `docker-compose up -d`
 
 ## Setup Hasura
-https://docs.hasura.io/1.0/graphql/manual/auth/common-roles-auth-examples.html
+Setup hasura
 
-You can refere documentation here
+1) After setup you can visit hasura app at http://localhost:8080/console
+![Alt text](screenshots/hasura-dashboard.png?raw=true "Title")
 
-![Alt text](screenshots/downloaded-from-hasura.png?raw=true "Title")
+2) Create an table
+`Data->Create Table`
+![Alt text](screenshots/hasura-setup.png?raw=true "Title")
+
+3) Setup Permissions
+`Data->TableName->Permissions`
+![Alt text](screenshots/hasura-permission.png?raw=true "Title")
+
+4) Extra permission checks
+`Data->TableName->Permissions`
+In this you can limit to the user to query the data
+![Alt text](screenshots/extra-permission.png?raw=true "Title")
+
+> Now you need to query the server with header Authorization with value `Bearer ${ access_token }`
+
+## Example
+
+```javascript
+fetch("http://HASURA_ENDPOINT", {
+    "credentials":"include",
+    "headers":{
+        "accept":"application/json, text/plain, */*",
+        "authorization":"bearer ACCESS_TOKEN",
+        "content-type":"application/json"
+    },
+    "referrerPolicy":"no-referrer-when-downgrade",
+    "body":"{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  product {\\n    id\\n    name\\n    description\\n    __typename\\n  }\\n}\\n\"}",
+    "method":"POST"
+});
+```
+
+## Client Examples
+
+[Angular](examples/hasura-connector-angular)
 
 ## Kubernates
 
