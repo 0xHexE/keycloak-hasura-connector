@@ -7,7 +7,7 @@ Connect hasura with the keycloak. Project support multiple organization setup in
 ## Docker compose
 To use the hasura and keycloak image you use the `docker-compose.yml` file. Edit the environment variables.
 
-```
+```yml
 KEYCLOAK_CLIENT_ID: Client ID For the keycloak
 KEYCLOAK_SERVER_URL: Keycloak Server url
 KEYCLOAK_REALM: Keycloak Realm
