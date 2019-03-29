@@ -1,0 +1,10 @@
+{
+  "kcConfig": {
+    "serverUrl": "https://accounts.f4erp.com/auth",
+    "clientId": "sanwad-api",
+    "realm": "sanwad-global",
+    "credentials": {
+      "secret": "f5b4f069-55c9-41a6-99f2-4f227e4323c8"
+    }
+  }
+}

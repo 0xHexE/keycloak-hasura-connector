@@ -15,8 +15,14 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
     const subGroups = (tokenContent.group || []).map(res => res.replace(`/${ organizationId }`, '')).join(',');
 
+    const roles = tokenContent.resource_access[config.get('kcConfig.clientId')];
+
+    if (roles.length > 1) {
+        return req.status(401).json({ error: 'Multiple roles associated with user' });
+    }
+
     const hasuraVariables = {
-        'X-Hasura-Role': (tokenContent.resource_access[config.get('kcConfig.clientId')] || {roles: []}).roles.join(','),
+        'X-Hasura-Role': roles[0] || 'anonymous',
         'X-Hasura-Realm-Role': tokenContent.realm_access.roles.join(','),
         'X-Hasura-User-Id': tokenContent.id,
         'X-Hasura-Organization-Id': organizationId,
