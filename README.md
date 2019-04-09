@@ -71,6 +71,17 @@ In this you can limit to the user to query the data
 
 > Now you need to query the server with header Authorization with value `Bearer ${ access_token }`
 
+## Websockets
+To add support for websocket
+
+```js
+const connectionParam = {
+    headers: {
+        Authorization: `Bearer ${ token }`
+    },
+};
+```
+
 ## Example
 
 ```javascript

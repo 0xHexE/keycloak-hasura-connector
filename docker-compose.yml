@@ -15,7 +15,7 @@ services:
       - db_data:/var/lib/postgresql/data
 
   graphql-engine:
-    image: hasura/graphql-engine:v1.0.0-alpha41
+    image: hasura/graphql-engine:v1.0.0-alpha42
     ports:
       - "8080:8080"
     depends_on:
