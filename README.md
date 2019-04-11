@@ -1,18 +1,27 @@
 # Connect Hasura with postgres
 Connect hasura with the keycloak. Project support multiple organization setup in order to achieve that you need to add the groups to the scope of the application.
 
+An easy way to authenticate keycloak.
+
+## Single user authentication
+In this you will get only User ID and Role 
+## Group or Organization based authentication
+In this you will get only User ID, Role and Organization ID  
+
+## Environment variables
+```dotenv
+KEYCLOAK_USERNAME=YOUR_KEYCLOAK_USER_NAME
+KEYCLOAK_PASSWORD=YOUR_KEYCLOAK_PSSWORD
+KEYCLOAK_CLIENT_ID=YOUR_KEYCLOAK_CLIENT_ID
+AUTH_MODE=single|organization
+```
+
+## Prerequisite
+* docker
+* docker-compose
+
 ## Installation
 `docker pull keycloak-hasura-connector`
-
-## Docker compose
-To use the hasura and keycloak image you use the `docker-compose.yml` file. Edit the environment variables.
-
-```yml
-KEYCLOAK_CLIENT_ID: Client ID For the keycloak
-KEYCLOAK_SERVER_URL: Keycloak Server url
-KEYCLOAK_REALM: Keycloak Realm
-KEYCLOAK_SECRET: Keycloak Secret
-```
 
 ## Setup Keycloak
 You can setup keycloak with the hasura.

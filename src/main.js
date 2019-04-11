@@ -8,25 +8,36 @@ app.get('/', keycloak.middleware(), (res, req) => {
         return req.sendStatus(401);
     }
 
+    const clientId = config.get('kcConfig.clientId');
+
     const tokenContent = res.kauth.grant.access_token.content;
 
-    const organizationId = `${ (tokenContent.group || [])
-        .sort((v1, v2) => v1.split('/').length - v2.split('/').length)[0] }`.split('/')[1];
+    if (!tokenContent.resource_access[config.get(clientId)]) {
+        console.error('Client config is not found');
+        req.sendStatus(401);
+    }
 
-    const subGroups = (tokenContent.group || []).map(res => res.replace(`/${ organizationId }`, '')).join(',');
+    const roles = tokenContent.resource_access[clientId].roles;
 
-    const roles = tokenContent.resource_access[config.get('kcConfig.clientId')].roles;
+    let hasuraVariables = {};
+
+    switch (config.get('authMode')) {
+        case 'organization':
+            const organizationId = `${ (tokenContent.group || [])
+                .sort((v1, v2) => v1.split('/').length - v2.split('/').length)[0] }`.split('/')[1];
+            const subGroups = (tokenContent.group || []).map(res => res.replace(`/${ organizationId }`, '')).join(',');
+            hasuraVariables['X-Hasura-Organization-Id'] = organizationId;
+            hasuraVariables['X-Hasura-Sub-Groups-Id'] = subGroups;
+    }
 
     if (roles.length > 1) {
         return req.status(401).json({ error: 'Multiple roles associated with user' });
     }
 
-    const hasuraVariables = {
+    hasuraVariables = {
         'X-Hasura-Role': roles[0] || 'anonymous',
         'X-Hasura-Realm-Role': tokenContent.realm_access.roles.join(','),
         'X-Hasura-User-Id': tokenContent.id,
-        'X-Hasura-Organization-Id': organizationId,
-        'X-Hasura-Sub-Groups-Id': subGroups,
     };
 
     req.status(200)

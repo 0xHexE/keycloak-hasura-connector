@@ -1,12 +1,29 @@
 version: '3.6'
 services:
+  keycloak:
+    image: jboss/keycloak:latest
+    environment:
+      KEYCLOAK_USER: ${KEYCLOAK_USERNAME}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      DB_ADDR: auth_database
+      DB_DATABASE: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+
+  auth_database:
+    image: postgres
+    restart: always
+    volumes:
+      - auth_db:/var/lib/postgresql/data
+
   auth:
     image: httpsomkar/keycloak-hasura-connector:latest
     environment:
-      KEYCLOAK_CLIENT_ID: CLIENT_ID
-      KEYCLOAK_SERVER_URL: KEYCLOAK_URL
-      KEYCLOAK_REALM: KEYCLOAK_REALM
-      KEYCLOAK_SECRET: KEYCLOAK_SECRET
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID}
+      KEYCLOAK_SERVER_URL: http://keycloak/auth
+      KEYCLOAK_REALM: master
+      KEYCLOAK_SECRET: ${KEYCLOAK_SECRET}
+      AUTH_MODE: ${AUTH_MODE} # SINGLE USER, ORGANIZATION
 
   postgres:
     image: postgres
@@ -31,3 +48,4 @@ services:
 
 volumes:
   db_data:
+  auth_db:
