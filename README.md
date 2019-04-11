@@ -31,12 +31,12 @@ You can setup keycloak with the hasura.
 
 4) Goto credentials tab and copy the secret
 
-## Setup environment 
+## Setup environment
 
 Download the docker-compose.yml file from this repo or run this command
 
 ```bash
-curl https://raw.githubusercontent.com/httpsOmkar/keycloak-hasura-connector/master/docker-compose.yml
+curl https://raw.githubusercontent.com/httpsOmkar/keycloak-hasura-connector/master/install-manifests/docker-compose.yml
 ```
 
 Edit the variables in the docker-compose.yml
