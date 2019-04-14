@@ -58,20 +58,20 @@ To setup you will need setup keycloak first. To get the user id in the token you
     
 * Setup scope
     
-    * To add the id into the token claim you need to add the scope `Client Scopes -> Create`
+    * Add ID into the scope
     
-    * Select no template and Next
-    
-    * Put name as id and save
-    
-    * Then click on mappers
-    
-    * Click on create
-    
-    * Put `Name` and select the `Mapper Type` to user property
-    
-    * Set `Property` to id, `Token Claim Name` to id and `Claim JSON Type` to String. Leave all ticks to on.
-    
+        * Select no template and Next
+        
+        * Put name as id and save
+        
+        * Then click on mappers
+        
+        * Click on create
+        
+        * Put `Name` and select the `Mapper Type` to `User property`
+        
+        * Set `Property` to `id`, `Token Claim Name` to id and `Claim JSON Type` to String. Leave all ticks to on.  
+
 * Set the environment variables  
     ```dotenv
       KEYCLOAK_CLIENT_ID=KEYCLOAK_CLIENT_ID
@@ -80,7 +80,7 @@ To setup you will need setup keycloak first. To get the user id in the token you
       KEYCLOAK_SECRET=KEYCLOAK_SECRET # Coped secret from credentials tab
       AUTH_MODE=single # single|organization
     ```
-* And start the docker-compose
+* And start the docker-compose.
 
 ## Setup Hasura
 Setup hasura
