@@ -1,0 +1,34 @@
+version: '3.6'
+services:
+  auth:
+    image: httpsomkar/keycloak-hasura-connector:latest
+    environment:
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID}
+      KEYCLOAK_SERVER_URL: ${KEYCLOAK_URL}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      KEYCLOAK_SECRET: ${KEYCLOAK_SECRET}
+      AUTH_MODE: ${AUTH_MODE} # SINGLE USER, ORGANIZATION
+
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  graphql-engine:
+    image: hasura/graphql-engine:v1.0.0-alpha42
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "postgres"
+      - "auth"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_TELEMETRY: "false" # https://docs.hasura.io/1.0/graphql/manual/guides/telemetry.html
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      HASURA_GRAPHQL_ADMIN_SECRET: mysecretaccesskey
+      HASURA_GRAPHQL_AUTH_HOOK: http://auth:3000
+
+volumes:
+  db_data:

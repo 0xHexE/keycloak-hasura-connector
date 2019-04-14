@@ -3,11 +3,6 @@ Connect hasura with the keycloak. Project support multiple organization setup in
 
 An easy way to authenticate keycloak.
 
-## Single user authentication
-In this you will get only User ID and Role 
-## Group or Organization based authentication
-In this you will get only User ID, Role and Organization ID  
-
 ## Environment variables
 ```dotenv
 KEYCLOAK_USERNAME=YOUR_KEYCLOAK_USER_NAME
@@ -20,44 +15,72 @@ AUTH_MODE=single|organization
 * docker
 * docker-compose
 
-## Installation
-`docker pull keycloak-hasura-connector`
-
-## Setup Keycloak
-You can setup keycloak with the hasura.
-
-1) Add new user to the keycloak
-`Manage->Users->Add user`
-![Alt text](screenshots/add-user.png?raw=true "Title")
-
-2) Create a organization group
-`Manage->Groups->New`
-![Alt text](screenshots/add-group.png?raw=true "Title")
-
-3) Create an client (Note: Select Access Type: bearer only)
-`Configure->Clients->Create`
-![Alt text](screenshots/add-client.png?raw=true "Title")
-
-4) Goto credentials tab and copy the secret
-
-## Setup environment
-
-Download the docker-compose.yml file from this repo or run this command
+## Setup
 
 ```bash
-curl https://raw.githubusercontent.com/httpsOmkar/keycloak-hasura-connector/master/install-manifests/docker-compose.yml
+wget https://raw.githubusercontent.com/httpsOmkar/keycloak-hasura-connector/master/install-manifests/docker-compose.yml
 ```
 
-Edit the variables in the docker-compose.yml
+Edit the variables in the .env
 ```yml
-KEYCLOAK_CLIENT_ID: CLIENT ID FROM THE STEP 3
-KEYCLOAK_SERVER_URL: URL of the keycloak
-KEYCLOAK_REALM: REALM NAME OF THE KEYCLOAK USSUALLY master
-KEYCLOAK_SECRET: SECRET COPIED FROM THE STEP 4
+KEYCLOAK_USERNAME=keycloak
+KEYCLOAK_PASSWORD=keycloak
+KEYCLOAK_CLIENT_ID=demo-app
+AUTH_MODE=single|multiple
 ```
 
 And run
 `docker-compose up -d`
+
+We currently support two authentication modes in which
+* Single user authentication
+    * In this you will get only User ID and Role 
+* Group or Organization based authentication
+    * In this you will get only User ID, Role and Organization ID  
+
+### Single user
+To setup you will need setup keycloak first. To get the user id in the token you will need to add the token claim `id`.
+
+* Setup Client
+
+    * Open your keycloak admin console
+    
+    * Create a client for frontend `Clients -> Create`
+    
+        * Click on create
+        * Set the client id and click next
+        * And `Access type` to public.
+        * Set your redirect url `base url`, `admin url`, `base url` and `web origins` to your app.
+    
+    * We need another client for our hasura backend. Follow above procedure and change the `Access Type` to `bearer-only` in step 3. and click on save.
+    
+    * Goto `credentials` tab and copy the secret.
+    
+* Setup scope
+    
+    * To add the id into the token claim you need to add the scope `Client Scopes -> Create`
+    
+    * Select no template and Next
+    
+    * Put name as id and save
+    
+    * Then click on mappers
+    
+    * Click on create
+    
+    * Put `Name` and select the `Mapper Type` to user property
+    
+    * Set `Property` to id, `Token Claim Name` to id and `Claim JSON Type` to String. Leave all ticks to on.
+    
+* Set the environment variables  
+    ```dotenv
+      KEYCLOAK_CLIENT_ID=KEYCLOAK_CLIENT_ID
+      KEYCLOAK_SERVER_URL=KEYCLOAK_URL
+      KEYCLOAK_REALM=KEYCLOAK_REALM
+      KEYCLOAK_SECRET=KEYCLOAK_SECRET # Coped secret from credentials tab
+      AUTH_MODE=single # single|organization
+    ```
+* And start the docker-compose
 
 ## Setup Hasura
 Setup hasura
@@ -89,22 +112,6 @@ const connectionParam = {
         Authorization: `Bearer ${ token }`
     },
 };
-```
-
-## Example
-
-```javascript
-fetch("http://HASURA_ENDPOINT", {
-    "credentials":"include",
-    "headers":{
-        "accept":"application/json, text/plain, */*",
-        "authorization":"bearer ACCESS_TOKEN",
-        "content-type":"application/json"
-    },
-    "referrerPolicy":"no-referrer-when-downgrade",
-    "body":"{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  product {\\n    id\\n    name\\n    description\\n    __typename\\n  }\\n}\\n\"}",
-    "method":"POST"
-});
 ```
 
 ## Client Examples
