@@ -14,7 +14,7 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
     if (!tokenContent.resource_access[config.get('kcConfig.clientId')]) {
         console.error('Client config is not found');
-        req.sendStatus(401);
+        return req.sendStatus(401);
     }
 
     const roles = tokenContent.resource_access[config.get('kcConfig.clientId')].roles;
