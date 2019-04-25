@@ -12,12 +12,12 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
     const tokenContent = res.kauth.grant.access_token.content;
 
-    if (!tokenContent.resource_access[config.get(clientId)]) {
+    if (!tokenContent.resource_access[config.get('kcConfig.clientId')]) {
         console.error('Client config is not found');
         req.sendStatus(401);
     }
 
-    const roles = tokenContent.resource_access[clientId].roles;
+    const roles = tokenContent.resource_access[config.get('kcConfig.clientId')].roles;
 
     let hasuraVariables = {};
 
