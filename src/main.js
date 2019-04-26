@@ -31,7 +31,9 @@ app.get('/', keycloak.middleware(), (res, req) => {
         const subGroups = (tokenContent.group || []).map(res => res.replace(`/${ organizationId }`, '')).join(',');
         hasuraVariables['X-Hasura-Organization-Id'] = organizationId;
         hasuraVariables['X-Hasura-Sub-Groups-Id'] = subGroups;
-    } catch (e) { }
+    } catch (e) {
+        console.error(e);
+    }
 
     if (roles.length > 1) {
         return req.status(401).json({ error: 'Multiple roles associated with user' });
