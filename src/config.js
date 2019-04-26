@@ -21,6 +21,12 @@ const config = convict({
         default: null,
         env: 'AUTH_MODE',
     },
+    debugMode: {
+        doc: 'Is debug mode',
+        format: Boolean,
+        default: false,
+        env: 'KEYCLAOK_DEBUG',
+    },
     kcConfig: {
         clientId: {
             doc: 'Keycloak config',

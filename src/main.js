@@ -8,16 +8,20 @@ app.get('/', keycloak.middleware(), (res, req) => {
         return req.sendStatus(401);
     }
 
+    if (config.get('debugMode')) {
+        console.log(res.kauth.grant);
+    }
+
     const clientId = config.get('kcConfig.clientId');
 
     const tokenContent = res.kauth.grant.access_token.content;
 
-    if (!tokenContent.resource_access[config.get('kcConfig.clientId')]) {
+    if (!tokenContent.resource_access[clientId]) {
         console.error('Client config is not found');
         return req.sendStatus(401);
     }
 
-    const roles = tokenContent.resource_access[config.get('kcConfig.clientId')].roles;
+    const roles = tokenContent.resource_access[clientId].roles;
 
     let hasuraVariables = {};
 
@@ -39,6 +43,10 @@ app.get('/', keycloak.middleware(), (res, req) => {
         'X-Hasura-Realm-Role': tokenContent.realm_access.roles.join(','),
         'X-Hasura-User-Id': tokenContent.id,
     };
+
+    if (config.get('debugMode')) {
+        console.log(hasuraVariables);
+    }
 
     req.status(200)
         .jsonp(hasuraVariables);
