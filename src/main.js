@@ -25,14 +25,12 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
     let hasuraVariables = {};
 
-    try {
+    if (tokenContent.group) {
         const organizationId = `${ (tokenContent.group || [])
             .sort((v1, v2) => v1.split('/').length - v2.split('/').length)[0] }`.split('/')[1];
         const subGroups = (tokenContent.group || []).map(res => res.replace(`/${ organizationId }`, '')).join(',');
         hasuraVariables['X-Hasura-Organization-Id'] = organizationId;
         hasuraVariables['X-Hasura-Sub-Groups-Id'] = subGroups;
-    } catch (e) {
-        console.error(e);
     }
 
     if (roles.length > 1) {
