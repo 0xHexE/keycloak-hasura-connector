@@ -25,7 +25,7 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
     let hasuraVariables = {};
 
-    if (tokenContent.group) {
+    if (Array.isArray(tokenContent.group)) {
         const organizationId = `${ (tokenContent.group || [])
             .sort((v1, v2) => v1.split('/').length - v2.split('/').length)[0] }`.split('/')[1];
         const subGroups = (tokenContent.group || []).map(res => res.replace(`/${ organizationId }`, '')).join(',');
