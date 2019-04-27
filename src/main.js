@@ -3,6 +3,11 @@ const Keycloak = require('keycloak-connect');
 const config = require('./config');
 const keycloak = new Keycloak({  }, config.get('kcConfig'));
 
+app.get('*', (res, req, next) => {
+    console.log(`${ res.method.toUpperCase() }: ${res.url}`);
+    next();
+});
+
 app.get('/', keycloak.middleware(), (res, req) => {
     if (!res.kauth.grant) {
         return req.sendStatus(401);
@@ -23,7 +28,15 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
     const roles = tokenContent.resource_access[clientId].roles;
 
-    let hasuraVariables = {};
+    if (roles.length > 1) {
+        return req.status(401).json({ error: 'Multiple roles associated with user' });
+    }
+
+    let hasuraVariables = {
+        'X-Hasura-Role': roles[0] || 'anonymous',
+        'X-Hasura-Realm-Role': tokenContent.realm_access.roles.join(','),
+        'X-Hasura-User-Id': tokenContent.id,
+    };
 
     if (Array.isArray(tokenContent.group)) {
         const organizationId = `${ (tokenContent.group || [])
@@ -33,16 +46,6 @@ app.get('/', keycloak.middleware(), (res, req) => {
         hasuraVariables['X-Hasura-Sub-Groups-Id'] = subGroups;
     }
 
-    if (roles.length > 1) {
-        return req.status(401).json({ error: 'Multiple roles associated with user' });
-    }
-
-    hasuraVariables = {
-        'X-Hasura-Role': roles[0] || 'anonymous',
-        'X-Hasura-Realm-Role': tokenContent.realm_access.roles.join(','),
-        'X-Hasura-User-Id': tokenContent.id,
-    };
-
     if (config.get('debugMode')) {
         console.log(hasuraVariables);
     }
@@ -51,6 +54,7 @@ app.get('/', keycloak.middleware(), (res, req) => {
         .jsonp(hasuraVariables);
 });
 
-app.listen(3000, () => {
-    console.log('Server running on http://localhost:3000 port');
+app.listen(config.get('port'), () => {
+    const port = config.get('port');
+    console.log(`Server running on http://localhost:${ port } port`);
 });
