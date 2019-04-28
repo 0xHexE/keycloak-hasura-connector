@@ -15,12 +15,6 @@ const config = convict({
         env: 'PORT',
         arg: 'port'
     },
-    authMode: {
-        doc: 'Authentication mode for keycloak',
-        format: String,
-        default: null,
-        env: 'AUTH_MODE',
-    },
     debugMode: {
         doc: 'Is debug mode',
         format: Boolean,
