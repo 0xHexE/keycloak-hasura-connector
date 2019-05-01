@@ -1,0 +1,10 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "examples/hasura-connector-angular/package.json",
+        "package.json"
+      ]
+    }
+  }
+}
