@@ -19,7 +19,9 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
     const clientId = config.get('kcConfig.clientId');
 
-    const tokenContent = res.kauth.grant.access_token.content;
+    const accessToken = res.kauth.grant.access_token;
+
+    const tokenContent = accessToken.content;
 
     if (!tokenContent.resource_access[clientId]) {
         console.error('Client config is not found');
@@ -35,7 +37,7 @@ app.get('/', keycloak.middleware(), (res, req) => {
     let hasuraVariables = {
         'X-Hasura-Role': roles[0] || 'anonymous',
         'X-Hasura-Realm-Role': tokenContent.realm_access.roles.join(','),
-        'X-Hasura-User-Id': tokenContent.id,
+        'X-Hasura-User-Id': accessToken.sub,
     };
 
     if (Array.isArray(tokenContent.group)) {

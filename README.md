@@ -26,20 +26,12 @@ Edit the variables in the .env
 KEYCLOAK_USERNAME=keycloak
 KEYCLOAK_PASSWORD=keycloak
 KEYCLOAK_CLIENT_ID=demo-app
-AUTH_MODE=single|multiple
 ```
 
 And run
 `docker-compose up -d`
 
-We currently support two authentication modes in which
-* Single user authentication
-    * In this you will get only User ID and Role 
-* Group or Organization based authentication
-    * In this you will get only User ID, Role and Organization ID  
-
-### Single user
-To setup you will need setup keycloak first. To get the user id in the token you will need to add the token claim `id`.
+To setup you will need setup keycloak first.
 
 * Setup Client
 
@@ -55,22 +47,6 @@ To setup you will need setup keycloak first. To get the user id in the token you
     * We need another client for our hasura backend. Follow above procedure and change the `Access Type` to `bearer-only` in step 3. and click on save.
     
     * Goto `credentials` tab and copy the secret.
-    
-* Setup scope
-    
-    * Add ID into the scope
-    
-        * Select no template and Next
-        
-        * Put name as id and save
-        
-        * Then click on mappers
-        
-        * Click on create
-        
-        * Put `Name` and select the `Mapper Type` to `User property`
-        
-        * Set `Property` to `id`, `Token Claim Name` to id and `Claim JSON Type` to String. Leave all ticks to on.  
 
 * Set the environment variables  
     ```dotenv
