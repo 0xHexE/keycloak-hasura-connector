@@ -1,4 +1,7 @@
 # Connect Hasura with keycloak
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/httpsOmkar/keycloak-hasura-connector.svg)](https://greenkeeper.io/)
+
 Connect hasura with the keycloak. Project support multiple organization setup in order to achieve that you need to add the groups to the scope of the application.
 
 An easy way to authenticate keycloak.
