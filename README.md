@@ -52,8 +52,7 @@ To setup you will need setup keycloak first.
       KEYCLOAK_CLIENT_ID=KEYCLOAK_CLIENT_ID
       KEYCLOAK_SERVER_URL=KEYCLOAK_URL
       KEYCLOAK_REALM=KEYCLOAK_REALM
-      KEYCLOAK_SECRET=KEYCLOAK_SECRET # Coped secret from credentials tab
-      AUTH_MODE=single # single|organization
+      KEYCLOAK_SECRET=KEYCLOAK_SECRET # Copied secret from credentials tab
     ```
 * And start the docker-compose.
 
