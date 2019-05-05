@@ -5,6 +5,7 @@ services:
     environment:
       KEYCLOAK_USER: ${KEYCLOAK_USERNAME}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      # We are using the default h2 database
 
   auth:
     image: httpsomkar/keycloak-hasura-connector:latest
