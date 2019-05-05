@@ -5,16 +5,6 @@ services:
     environment:
       KEYCLOAK_USER: ${KEYCLOAK_USERNAME}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
-      DB_ADDR: auth_database
-      DB_DATABASE: postgres
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-
-  auth_database:
-    image: postgres
-    restart: always
-    volumes:
-      - auth_db:/var/lib/postgresql/data
 
   auth:
     image: httpsomkar/keycloak-hasura-connector:latest
