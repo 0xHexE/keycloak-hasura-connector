@@ -5,6 +5,11 @@ const keycloak = new Keycloak({  }, config.get('kcConfig'));
 const { tokenParser } = require('./token');
 const packageJson = require('../package');
 
+app.get('*', (res, req, next) => {
+    console.log(res.headers);
+    next();
+});
+
 app.get('/', keycloak.middleware(), (res, req) => {
     if (!res.kauth.grant) {
         return req.sendStatus(401);
@@ -24,4 +29,7 @@ app.listen(config.get('port'), () => {
     const port = config.get('port');
     console.log(`Server running on http://localhost:${ port } port`);
     console.log(`Version ${ packageJson.version }`);
+    if (config.get('debugMode')) {
+        console.log(config.get('kcConfig'));
+    }
 });

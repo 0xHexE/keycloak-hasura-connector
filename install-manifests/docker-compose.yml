@@ -1,22 +1,42 @@
 version: '3.6'
 services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+
+    volumes:
+      - auth_db_keycloak_connector:/var/lib/postgresql/data
+
   keycloak:
     image: jboss/keycloak:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
     environment:
       KEYCLOAK_USER: ${KEYCLOAK_USERNAME}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
-      # We are using the default h2 database
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
 
   auth:
     image: httpsomkar/keycloak-hasura-connector:latest
+    depends_on:
+      - "keycloak"
     environment:
       KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID}
-      KEYCLOAK_SERVER_URL: http://keycloak/auth
-      KEYCLOAK_REALM: master
+      KEYCLOAK_SERVER_URL: ${KEYCLOAK_URL}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
       KEYCLOAK_SECRET: ${KEYCLOAK_SECRET}
-      AUTH_MODE: ${AUTH_MODE} # SINGLE USER, ORGANIZATION
+      KEYCLOAK_DEBUG: "true"
 
-  postgres:
+  postgres_db:
     image: postgres
     restart: always
     volumes:
@@ -25,13 +45,14 @@ services:
   graphql-engine:
     image: hasura/graphql-engine:v1.0.0-alpha42
     ports:
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
-      - "postgres"
+      - "postgres_db"
       - "auth"
+      - "keycloak"
     restart: always
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres_db:5432/postgres
       HASURA_GRAPHQL_ENABLE_TELEMETRY: "false" # https://docs.hasura.io/1.0/graphql/manual/guides/telemetry.html
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       HASURA_GRAPHQL_ADMIN_SECRET: mysecretaccesskey
@@ -39,4 +60,4 @@ services:
 
 volumes:
   db_data:
-  auth_db:
+  auth_db_keycloak_connector:
