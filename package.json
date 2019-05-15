@@ -1,11 +1,12 @@
 {
-  "name": "sanwad-backend",
-  "version": "1.0.0",
+  "name": "hasura-connector",
+  "version": "0.0.1-beta",
   "description": "",
-  "main": "index.js",
+  "main": "src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/main.js"
+    "test": "jest",
+    "start": "node src/main.js",
+    "lint": "jshint -c .jshintrc --exclude-path .gitignore ."
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,8 @@
     "keycloak-connect": "^4.8.3"
   },
   "devDependencies": {
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "jest": "^24.8.0",
+    "jshint": "^2.10.2"
   }
 }
