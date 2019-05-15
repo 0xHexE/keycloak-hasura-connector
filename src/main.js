@@ -5,10 +5,14 @@ const keycloak = new Keycloak({  }, config.get('kcConfig'));
 const { tokenParser } = require('./token');
 const packageJson = require('../package');
 
-app.get('*', (res, req, next) => {
-    console.log(res.headers);
-    next();
-});
+const debugMode = config.get('debugMode');
+
+if (debugMode) {
+    app.get('*', (res, req, next) => {
+        console.log(res.headers);
+        next();
+    });
+}
 
 app.get('/', keycloak.middleware(), (res, req) => {
     if (!res.kauth.grant) {
@@ -17,12 +21,15 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
     const tokenParsed = tokenParser(res.kauth.grant, config.get('kcConfig.clientId'));
 
-    if (config.get('debugMode')) {
+    if (debugMode) {
         console.log(tokenParsed);
     }
 
     return req.status(200)
-        .jsonp(tokenParsed);
+        .jsonp({
+            ...tokenParsed,
+            'X-Debug-Mode-Enabled': debugMode
+        });
 });
 
 app.listen(config.get('port'), () => {

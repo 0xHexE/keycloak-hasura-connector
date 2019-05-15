@@ -24,7 +24,7 @@ exports.tokenParser = (content, clientId) => {
     ) {
         role['X-Hasura-Role'] = clientResource.roles[0];
     } else {
-        console.warn('Role not found in the token please verify the client ID is valid');
+        console.warn('Role not found in the token please verify the client ID is valid or the role scope is enabled');
     }
 
     return {
@@ -47,6 +47,7 @@ const parseGroup = exports.parseGroup = (group, defaultGroup) => {
         if (typeof defaultGroup === 'number' && !isNaN(defaultGroup)) {
             parsedGroup['X-Hasura-Organization-Id'] = rootGroups[defaultGroup];
         } else {
+            console.log('Default organization assigned as first');
             parsedGroup['X-Hasura-Organization-Id'] = rootGroups[0];
         }
     }
