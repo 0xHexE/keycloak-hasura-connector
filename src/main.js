@@ -19,7 +19,7 @@ app.get('/', keycloak.middleware(), (res, req) => {
         return req.sendStatus(401);
     }
 
-    const tokenParsed = tokenParser(res.kauth.grant, config.get('kcConfig.clientId'));
+    const tokenParsed = tokenParser(res.kauth.grant, config.get('kcConfig.clientId'), debugMode);
 
     if (debugMode) {
         console.log(tokenParsed);
@@ -28,7 +28,6 @@ app.get('/', keycloak.middleware(), (res, req) => {
     return req.status(200)
         .jsonp({
             ...tokenParsed,
-            'X-Debug-Mode-Enabled': debugMode
         });
 });
 

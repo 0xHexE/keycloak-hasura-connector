@@ -7,6 +7,13 @@ describe('TokenSpec', function () {
         expect(typeof returnValue["X-Hasura-User-Id"]).toBe('string');
         expect(returnValue["X-Hasura-User-Id"]).toBe('39306dc9-534b-43e0-ac3b-94ef9b50ccce');
         expect(returnValue["X-Hasura-Organization-Id"]).toBe('org');
+
+        for (const key in returnValue) {
+            if (returnValue.hasOwnProperty(key)) {
+                expect(typeof returnValue[key]).toBe('string');
+            }
+        }
+
     });
 
     it('should parse the group', function () {

@@ -1,4 +1,4 @@
-exports.tokenParser = (content, clientId) => {
+exports.tokenParser = (content, clientId, debugMode) => {
     const accessToken = content.access_token;
 
     const userId = accessToken.content.sub;
@@ -29,6 +29,7 @@ exports.tokenParser = (content, clientId) => {
 
     return {
         'X-Hasura-User-Id': userId,
+        'X-Debug-Mode-Enabled': (debugMode || false).toString(),
         ...group,
         ...role,
     };
