@@ -13,6 +13,6 @@ describe('TokenSpec', function () {
         let organizationId = parseGroup(['/group'], 0);
         expect(organizationId['X-Hasura-Organization-Id']).toBe('group');
         organizationId = parseGroup(['/group/group'], 0);
-        expect(organizationId['X-Hasura-Sub-Organization-Id']).toBe('group');
+        expect(organizationId['X-Hasura-Sub-Group-Id']).toBe('group');
     });
 });

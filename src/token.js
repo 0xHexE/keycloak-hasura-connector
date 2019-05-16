@@ -52,5 +52,14 @@ const parseGroup = exports.parseGroup = (group, defaultGroup) => {
         }
     }
 
+    // TODO: IMPROVE THIS FUNCTION
+    const subGroup = group.map(res => res.split('/')[2])
+        .filter(res => !!res)
+        .filter((item, index, self) => self.indexOf(item) === index);
+
+    if (subGroup[0]) {
+        parsedGroup['X-Hasura-Sub-Group-Id'] = subGroup[0];
+    }
+
     return parsedGroup;
 };
