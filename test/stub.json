@@ -1,0 +1,53 @@
+{
+  "access_token": {
+    "token": "" ,
+    "clientId": "hasura-dev" ,
+    "header": {
+      "alg": "RS256" ,
+      "typ": "JWT" ,
+      "kid": "hg5goY3Y7vkc7TrDweiWaKSIrhI3WVkn8XSeTIXJMk4"
+    } ,
+    "content": {
+      "jti": "89aea9b8-abad-4876-bb54-1eb2a8bed28f" ,
+      "exp": 1557227668 ,
+      "nbf": 0 ,
+      "iat": 1557226768 ,
+      "iss": "https://keycloak.APPNAME.com/auth/realms/master" ,
+      "aud": [
+      ] ,
+      "sub": "39306dc9-534b-43e0-ac3b-94ef9b50ccce" ,
+      "typ": "Bearer" ,
+      "azp": "app-dev" ,
+      "nonce": "646316be-e148-4340-a41e-00ca00377e4c" ,
+      "auth_time": 1557216384 ,
+      "session_state": "8ef2113f-f1f1-4fad-91ee-222a45ed0305" ,
+      "acr": "0" ,
+      "allowed-origins": [
+      ],
+      "realm_access": {
+        "roles": [
+          "offline_access",
+          "uma_authorization",
+          "managers"
+        ]
+      },
+      "resource_access": {
+        "app-dev": {
+          "roles": [
+            "manager"
+          ]
+        }
+      } ,
+      "scope": "openid groups email profile" ,
+      "email_verified": false ,
+      "name": "Developer" ,
+      "preferred_username": "developer" ,
+      "given_name": "Developer" ,
+      "group": [
+        "/org/group1" ,
+        "/org1/group2/manager",
+        "/org2/group3/it"
+      ]
+    }
+  }
+}

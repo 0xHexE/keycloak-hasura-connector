@@ -19,7 +19,7 @@ const config = convict({
         doc: 'Is debug mode',
         format: Boolean,
         default: false,
-        env: 'KEYCLAOK_DEBUG',
+        env: 'KEYCLOAK_DEBUG',
     },
     kcConfig: {
         clientId: {
