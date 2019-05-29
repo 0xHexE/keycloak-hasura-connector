@@ -1,0 +1,26 @@
+version: '3.6'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+
+    volumes:
+      - auth_db_keycloak_connector:/var/lib/postgresql/data
+
+  keycloak:
+    image: jboss/keycloak:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      KEYCLOAK_USER: ${KEYCLOAK_USERNAME}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak

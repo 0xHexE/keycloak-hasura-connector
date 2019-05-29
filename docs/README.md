@@ -1,3 +1,4 @@
 ## Installation
 
-[Keycloak installation](keycloak-install.md)
+[Keycloak installation with docker](keycloak-install-docker.md)
+[Keycloak installation with docker-compose](docker-install-docker-compose.md)
