@@ -1,3 +1,3 @@
 ## Installation
 
-[Keycloak](/keycloak-install.md)
+[Keycloak installation](keycloak-install.md)
