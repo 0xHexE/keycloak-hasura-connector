@@ -1,28 +1,18 @@
-# Installation
+# Keycloak docker
 
-## Docker installation for the keycloak
-
-# Keycloak Docker image
-
-Keycloak Server Docker image.
-
-
-
-## Usage
+## Quick start
 
 To boot in standalone mode
 
     docker run jboss/keycloak
 
-
-
 ## Expose on localhost
 
 To be able to open Keycloak on localhost map port 8080 locally
 
-   docker run -p 8080:8080 jboss/keycloak
-
-
+```bash
+docker run -p 8080:8080 jboss/keycloak
+``` 
 
 ## Creating admin account
 
@@ -51,8 +41,6 @@ To create an admin account and import a previously exported realm run:
 
     docker run -e KEYCLOAK_USER=<USERNAME> -e KEYCLOAK_PASSWORD=<PASSWORD> \
         -e KEYCLOAK_IMPORT=/tmp/example-realm.json -v /tmp/example-realm.json:/tmp/example-realm.json jboss/keycloak
-
-
 
 ## Database
 
@@ -158,8 +146,6 @@ found here:
 #### Example
 
     docker run --name keycloak -e DB_VENDOR=postgres -e JDBC_PARAMS='connectTimeout=30' jboss/keycloak
-
-
 
 ## Adding a custom theme
 
@@ -303,8 +289,6 @@ When running Keycloak behind a proxy, you will need to enable proxy address forw
 
     docker run -e PROXY_ADDRESS_FORWARDING=true jboss/keycloak
 
-
-
 ### Setting up TLS(SSL)
 
 Keycloak image allows you to specify both a private key and a certificate for serving HTTPS. In that case you need to provide two files:
@@ -319,15 +303,11 @@ containing a `crt` file and point `X509_CA_BUNDLE` environmental variable to tha
 
 NOTE: See `openshift-examples` directory for an out of the box setup for OpenShift.
 
-
-
 ## Other details
 
 This image extends the [`jboss/base-jdk`](https://github.com/JBoss-Dockerfiles/base-jdk) image which adds the OpenJDK
 distribution on top of the [`jboss/base`](https://github.com/JBoss-Dockerfiles/base) image. Please refer to the README.md
 for selected images for more info.
-
-
 
 ## Building image with Keycloak from different sources
 
