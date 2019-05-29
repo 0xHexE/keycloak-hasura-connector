@@ -1,7 +1,18 @@
-# Connect Hasura with keycloak
-Connect hasura with the keycloak. Project support multiple organization setup in order to achieve that you need to add the groups to the scope of the application.
+<p align="center">
+  <a href="https://github.com/httpsOmkar/keycloak-hasura-connector">
+    <img src="logo.png" width="250px" alt="Keycloak Hasura Connector" />
+  </a>
+</p>
 
-An easy way to authenticate keycloak.
+---
+
+<h1 align="center">.:. Keycloak Hasura Connector .:. </h1>
+<h4 align="center">Production Ready Authentication solution for Hasura</h4>
+
+
+Connect Hasura with the Keycloak. Project support multiple organization setup in order to achieve that you need to add the groups to the scope of the application.
+
+An easy way to authenticate Keycloak.
 
 ## Environment variables
 ```dotenv
@@ -24,4 +35,4 @@ KEYCLOAK_CLIENT_ID=YOUR_KEYCLOAK_CLIENT_ID
 
 ## Kubernates
 
-You can use the postgres chart to deploy the postgres to kubernates. You can convert the docker-compose into kubernates file using the kompose
+You can use the Postgres chart to deploy the Postgres to Kubernates. You can convert the docker-compose into Kubernates file using the Kompose
