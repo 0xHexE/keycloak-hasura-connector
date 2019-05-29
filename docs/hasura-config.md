@@ -23,8 +23,6 @@ services:
       HASURA_GRAPHQL_AUTH_HOOK: http://auth:3000
   auth:
     image: httpsomkar/keycloak-hasura-connector:latest
-    depends_on:
-      - "keycloak"
     environment:
       KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID} # Keycloak backend client id from the keycloak setup. 
       KEYCLOAK_SERVER_URL: ${KEYCLOAK_URL} # Keycloak url in term of http://keycloak.COMPANY.com/auth
@@ -37,3 +35,14 @@ volumes:
 ```
 
 [Example manifest](install-manifests/hasura-manifest.yml)
+
+## Keycloak user config
+
+* Now create new user
+![New user](screenshot/keycloak-create-user.png)
+
+* Create client role
+![Client role](screenshot/client-role.png)
+
+* Add user into the role
+![Role mapping](screenshot/role-mapping.png)

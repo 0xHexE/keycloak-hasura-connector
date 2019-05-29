@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.apollo
-      .watchQuery({
+      .query({
         query: gql`
           {
             products {
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
           }
         `,
       })
-      .valueChanges.subscribe((result: any) => {
+      .subscribe((result: any) => {
         this.products = result.data && result.data.products;
         this.loading = result.loading;
         this.error = result.error;
