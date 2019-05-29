@@ -1,0 +1,30 @@
+version: '3.6'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  graphql-engine:
+    image: hasura/graphql-engine:v1.0.0-beta.2
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "postgres"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey # Your admin secret
+      HASURA_GRAPHQL_AUTH_HOOK: http://auth:3000
+  auth:
+    image: httpsomkar/keycloak-hasura-connector:latest
+    environment:
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID} # Keycloak backend client id from the keycloak setup.
+      KEYCLOAK_SERVER_URL: ${KEYCLOAK_URL} # Keycloak url in term of http://keycloak.COMPANY.com/auth
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM} # Default to master if any new create change to it
+      KEYCLOAK_SECRET: ${KEYCLOAK_SECRET} # Secret copied from the backend client -> Credentials
+      KEYCLOAK_DEBUG: "true" # If testing enable mention this file
+
+volumes:
+  db_data:

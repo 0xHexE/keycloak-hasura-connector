@@ -3,3 +3,4 @@ node_modules
 .idea
 install-manifests/.env
 src/test_cases.http
+examples/hasura-connector-angular/src/app/utils/kc.ts
