@@ -5,6 +5,9 @@
     * [Keycloak installation with docker-compose](docker-install-docker-compose.md)
 * [Keycloak configuration for the hasura-connector](keycloak-client-configuration.md)
 * [Setup hasura connector and hasura](hasura-config.md)
+* Frontend
+    * React (WIP) [Example](https://github.com/httpsOmkar/auth-react-component)
+    * Angular (WIP) [Example](/examples/hasura-connector-angular)
 * Mics
     * [Third party authentication like Google](https://www.keycloak.org/docs/latest/server_admin/index.html#social-identity-providers)
     * [Theme](https://www.keycloak.org/docs/latest/server_admin/index.html#_themes)
