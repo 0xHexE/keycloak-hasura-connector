@@ -24,3 +24,5 @@ services:
       DB_ADDR: postgres
       DB_USER: keycloak
       DB_PASSWORD: keycloak
+volumes:
+  auth_db_keycloak_connector:
