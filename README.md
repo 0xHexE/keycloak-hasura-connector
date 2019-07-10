@@ -14,13 +14,6 @@ Connect Hasura with the Keycloak. Project support multiple organization setup in
 
 An easy way to authenticate Keycloak.
 
-## Environment variables
-```dotenv
-KEYCLOAK_USERNAME=YOUR_KEYCLOAK_USER_NAME
-KEYCLOAK_PASSWORD=YOUR_KEYCLOAK_PSSWORD
-KEYCLOAK_CLIENT_ID=YOUR_KEYCLOAK_CLIENT_ID
-```
-
 ## Prerequisite
 * docker
 * docker-compose
