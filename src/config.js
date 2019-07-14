@@ -21,6 +21,12 @@ const config = convict({
         default: false,
         env: 'KEYCLOAK_DEBUG',
     },
+    AnonymousRole: {
+        doc: 'AnonymousRole used if the user not loged in',
+        format: String,
+        default: null,
+        env: 'ANONYMOUS_ROLE',
+    },
     kcConfig: {
         clientId: {
             doc: 'Keycloak config',
