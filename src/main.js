@@ -6,6 +6,7 @@ const { tokenParser } = require('./token');
 const packageJson = require('../package');
 
 const debugMode = config.get('debugMode');
+const AnonymousRole = config.get('AnonymousRole');
 
 if (debugMode) {
     app.get('*', (res, req, next) => {
@@ -16,7 +17,14 @@ if (debugMode) {
 
 app.get('/', keycloak.middleware(), (res, req) => {
     if (!res.kauth.grant) {
-        return req.sendStatus(401);
+        if(AnonymousRole){
+            return req.status(200)
+            .jsonp({
+                 'X-Hasura-Role':AnonymousRole
+            });
+        }else{
+            return req.sendStatus(401);
+        }
     }
 
     const tokenParsed = tokenParser(res.kauth.grant, config.get('kcConfig.clientId'), debugMode);
