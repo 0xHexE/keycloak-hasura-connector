@@ -29,3 +29,11 @@ An easy way to authenticate Keycloak.
 ## Kubernates
 
 You can use the Postgres chart to deploy the Postgres to Kubernates. You can convert the docker-compose into Kubernates file using the Kompose
+
+## Sponsor
+
+<p align="center">
+  <a href="https://www.appsintegra.com/" target="_blank">
+    <img width="260px" src="https://www.appsintegra.com/img/appsintegra-logo.png">
+  </a>
+</p>
