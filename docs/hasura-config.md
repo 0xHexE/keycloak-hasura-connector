@@ -29,6 +29,7 @@ services:
       KEYCLOAK_REALM: ${KEYCLOAK_REALM} # Default to master if any new create change to it
       KEYCLOAK_SECRET: ${KEYCLOAK_SECRET} # Secret copied from the backend client -> Credentials
       ANONYMOUS_ROLE: "anonymous" # (optional) Use this variable to set anonymous role name for unauthorized users as shown in the documentation: https://docs.hasura.io/1.0/graphql/manual/auth/authorization/common-roles-auth-examples.html#anonymous-not-logged-in-users
+      USER_ID_FIELD: "sub" #The name of the token field that will be mapped to X-Hasura-User-Id
       KEYCLOAK_DEBUG: "true" # If testing enable mention this file
 
 volumes:
