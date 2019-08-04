@@ -1,9 +1,9 @@
 const config = require('./config');
-const userid_field_name = config.get('UserIdField');
+const userIdFieldName = config.get('UserIdField');
 exports.tokenParser = (content, clientId, debugMode) => {
     const accessToken = content.access_token;
 
-    const userId = accessToken.content[userid_field_name+''];
+    const userId = accessToken.content[userIdFieldName+''];
 
     let group = {};
 
