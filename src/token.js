@@ -3,7 +3,7 @@ const userIdFieldName = config.get('UserIdField');
 exports.tokenParser = (content, clientId, debugMode) => {
     const accessToken = content.access_token;
 
-    const userId = accessToken.content[userIdFieldName+''];
+    const userId = accessToken.content[userIdFieldName];
 
     let group = {};
 
