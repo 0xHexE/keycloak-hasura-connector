@@ -27,6 +27,12 @@ const config = convict({
         default: null,
         env: 'ANONYMOUS_ROLE',
     },
+    UserIdField: {
+        doc: 'the name of the field that will be mapped to X-Hasura-User-Id',
+        format: String,
+        default: 'sub',
+        env: 'USER_ID_FIELD',
+    },
     kcConfig: {
         clientId: {
             doc: 'Keycloak config',
