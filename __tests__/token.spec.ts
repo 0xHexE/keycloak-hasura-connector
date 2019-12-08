@@ -2,7 +2,7 @@ import { tokenParser, parseGroup } from '../src/utils/TokenParser';
 import stubValue from './stub.json';
 
 type tDict = {
-  [key: string]: any;
+  [key: string]: string;
 };
 
 describe('TokenSpec', function() {

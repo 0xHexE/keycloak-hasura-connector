@@ -24,6 +24,7 @@ if (debugMode) {
   });
 }
 
+// eslint-disable-next-line
 app.get('/', keycloak.middleware(), (req: any, res: express.Response) => {
   const reqkauth = new KeycloakContext({ req });
 
