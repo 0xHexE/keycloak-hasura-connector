@@ -7,7 +7,8 @@ type tDict = {
   [key: string]: string;
 };
 
-export const parseGroup = (group: [], defaultGroup?: number): tDict => {
+// eslint-disable-next-line
+export const parseGroup = (group: any, defaultGroup?: number): tDict => {
   const parsedGroup: tDict = {};
 
   const rootGroups = group

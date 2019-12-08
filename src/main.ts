@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import Keycloak from 'keycloak-connect';
+import { inspect } from 'util';
 import config from './config';
 import packageJson from '../package.json';
 import { tokenParser } from './utils/TokenParser';
@@ -18,7 +19,7 @@ if (debugMode) {
   app.get('*', (req, _res, next: express.NextFunction) => {
     logger.log({
       level: 'debug',
-      message: JSON.stringify(req.headers),
+      message: inspect(req.headers),
     });
     next();
   });
@@ -28,7 +29,7 @@ if (debugMode) {
 app.get('/', keycloak.middleware(), (req: any, res: express.Response) => {
   const reqkauth = new KeycloakContext({ req });
 
-  if (!reqkauth) {
+  if (!reqkauth.accessToken) {
     if (AnonymousRole) {
       return res.status(200).jsonp({
         'X-Hasura-Role': AnonymousRole,
@@ -37,7 +38,7 @@ app.get('/', keycloak.middleware(), (req: any, res: express.Response) => {
     return res.sendStatus(401);
   }
 
-  const tokenParsed = tokenParser(req.kauth.grant, config.get('kcConfig.clientId'), debugMode);
+  const tokenParsed = tokenParser(reqkauth, config.get('kcConfig.clientId'), debugMode);
 
   if (debugMode) {
     logger.log({

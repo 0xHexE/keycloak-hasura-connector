@@ -1,7 +1,23 @@
-FROM node:alpine
-WORKDIR /usr/src/app
+FROM node:12.13.0 AS builder
+WORKDIR /usr/app
+
 COPY package*.json ./
-RUN npm install --only=production
-COPY . .
+COPY tsconfig*.json ./
+
+COPY ./src ./src
+RUN npm ci --quiet && npm run build
+
+# Production build
+FROM node:12.13.0-alpine
+
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY package*.json ./
+RUN npm ci --quiet --only=production
+
+COPY --from=builder /usr/app/dist ./dist
+
 EXPOSE 3000
-CMD [ "npm", "start" ]
+
+CMD [ "node", "dist/src/main.js"]
