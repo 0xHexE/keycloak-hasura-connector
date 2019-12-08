@@ -29,7 +29,7 @@ if (debugMode) {
 app.get('/', keycloak.middleware(), (req: any, res: express.Response) => {
   const reqkauth = new KeycloakContext({ req });
 
-  if (!reqkauth.accessToken) {
+  if (!reqkauth.access_token) {
     if (AnonymousRole) {
       return res.status(200).jsonp({
         'X-Hasura-Role': AnonymousRole,

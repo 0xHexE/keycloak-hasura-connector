@@ -42,7 +42,7 @@ export const parseGroup = (group: any, defaultGroup?: number): tDict => {
 
 // eslint-disable-next-line
 export const tokenParser = (content: any, clientId: string, debugMode?: boolean): tDict => {
-  const { accessToken } = content;
+  const { access_token: accessToken } = content;
   const userId = accessToken.content[userFieldName];
 
   let group = {};
