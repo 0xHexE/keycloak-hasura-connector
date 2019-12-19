@@ -7,9 +7,11 @@ exports.tokenParser = (content, clientId, debugMode) => {
 
     let group = {};
 
-    let role = {
-        'X-Hasura-Realm-Role': (accessToken.content.realm_access.roles || []).join(','),
-    };
+    let role = {};
+
+    if (accessToken.hasRealmRole()) {
+	role['X-Hasura-Realm-Role'] = (accessToken.content.realm_access.roles || []).join(',');
+    }
 
     if (accessToken.content && Array.isArray(accessToken.content.group)) {
         group = parseGroup(accessToken.content.group);
