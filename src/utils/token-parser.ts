@@ -1,5 +1,5 @@
 import config from '../config';
-import logger from './Logger';
+import logger from './logger';
 
 const userFieldName = config.get('UserIdField');
 

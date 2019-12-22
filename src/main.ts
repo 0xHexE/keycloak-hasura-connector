@@ -4,9 +4,9 @@ import Keycloak from 'keycloak-connect';
 import { inspect } from 'util';
 import config from './config';
 import packageJson from '../package.json';
-import { tokenParser } from './utils/TokenParser';
-import { KeycloakContext } from './utils/KeycloakContext';
-import logger from './utils/Logger';
+import { tokenParser } from './utils/token-parser';
+import { KeycloakContext } from './utils/keycloak-context';
+import logger from './utils/logger';
 
 const app = express();
 const keycloak = new Keycloak({}, config.get('kcConfig'));
