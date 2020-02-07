@@ -1,3 +1,5 @@
+dist/
+coverage/
 config/development.json
 node_modules
 .idea

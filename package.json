@@ -2,12 +2,7 @@
   "name": "hasura-connector",
   "version": "0.0.1-beta",
   "description": "Connect hasura with the keycloak",
-  "main": "src/main.js",
-  "scripts": {
-    "test": "jest",
-    "start": "node src/main.js",
-    "lint": "jshint -c .jshintrc --exclude-path .gitignore ."
-  },
+  "main": "src/main.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/httpsOmkar/sanwad-back.git"
@@ -19,13 +14,66 @@
   },
   "homepage": "https://github.com/httpsOmkar/sanwad-back#readme",
   "dependencies": {
-    "convict": "^4.4.1",
-    "express": "^4.16.4",
-    "keycloak-connect": "^4.8.3"
+    "convict": "^5.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "keycloak-connect": "^8.0.1",
+    "prettier": "^1.19.1",
+    "winston": "^3.2.1"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(./__tests__/.*(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "scripts": {
+    "test": "jest --coverage --verbose",
+    "build": "tsc",
+    "dev": "ts-node src/main.ts",
+    "start": "node dist/src/main.js",
+    "prod": "npm run build && npm start",
+    "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "devDependencies": {
-    "cors": "^2.8.5",
-    "jest": "^24.8.0",
-    "jshint": "^2.10.2"
-  }
+    "@types/convict": "^4.2.1",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.2",
+    "@types/jest": "^24.0.23",
+    "@types/keycloak-connect": "^4.5.1",
+    "@types/node": "^12.12.9",
+    "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.5.0",
+    "nodemon": "^1.19.4",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.2",
+    "typescript": "^3.7.2"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint"
+    ]
+  },
+  "files": [
+    "src/config",
+    "src/utils",
+    "src/main.ts"
+  ]
 }
