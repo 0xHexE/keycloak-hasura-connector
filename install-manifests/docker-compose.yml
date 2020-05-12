@@ -35,6 +35,7 @@ services:
       KEYCLOAK_REALM: ${KEYCLOAK_REALM}
       KEYCLOAK_SECRET: ${KEYCLOAK_SECRET}
       KEYCLOAK_DEBUG: "true"
+      ANONYMOUS_ROLE: "guest"
 
   postgres_db:
     image: postgres
