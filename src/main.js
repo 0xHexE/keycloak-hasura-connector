@@ -4,15 +4,19 @@ const config = require('./config');
 const keycloak = new Keycloak({  }, config.get('kcConfig'));
 const { tokenParser } = require('./token');
 const packageJson = require('../package');
+const logger = require('./logger');
+const httpLogger = require('./httpLogger');
 
 const debugMode = config.get('debugMode');
 const AnonymousRole = config.get('AnonymousRole');
 
 if (debugMode) {
+    app.use(httpLogger);
     app.get('*', (res, req, next) => {
-        console.log(res.headers);
+        logger.info('request header: ', res.headers);
         next();
     });
+    
 }
 
 app.get('/', keycloak.middleware(), (res, req) => {
@@ -30,7 +34,7 @@ app.get('/', keycloak.middleware(), (res, req) => {
     const tokenParsed = tokenParser(res.kauth.grant, config.get('kcConfig.clientId'), debugMode);
 
     if (debugMode) {
-        console.log(tokenParsed);
+        logger.info('tokenParsed: ', tokenParsed);
     }
 
     return req.status(200)
@@ -41,9 +45,9 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
 app.listen(config.get('port'), () => {
     const port = config.get('port');
-    console.log(`Server running on http://localhost:${ port } port`);
-    console.log(`Version ${ packageJson.version }`);
+    logger.info(`Server running on http://localhost:${ port } port`);
+    logger.info(`Version ${ packageJson.version }`);
     if (config.get('debugMode')) {
-        console.log(config.get('kcConfig'));
+        logger.info('kcConfig: ', config.get('kcConfig'));
     }
 });
