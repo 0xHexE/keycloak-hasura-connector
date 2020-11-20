@@ -1,5 +1,5 @@
 const morgan = require('morgan');
-const logger = require('./logger');
+const logger = require('../utils/logger');
 
 logger.stream = {
   write: message => logger.info(message.substring(0, message.lastIndexOf('\n')))

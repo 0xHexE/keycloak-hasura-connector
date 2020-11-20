@@ -1,11 +1,11 @@
 const app = require('express')();
 const Keycloak = require('keycloak-connect');
-const config = require('./config');
+const config = require('./utils/config');
 const keycloak = new Keycloak({  }, config.get('kcConfig'));
-const { tokenParser } = require('./token');
+const { tokenParser } = require('./utils/token');
 const packageJson = require('../package');
-const logger = require('./logger');
-const httpLogger = require('./httpLogger');
+const logger = require('./utils/logger');
+const httpLogger = require('./middlewares/httpLogger');
 
 const debugMode = config.get('debugMode');
 const AnonymousRole = config.get('AnonymousRole');
