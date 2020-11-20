@@ -1,5 +1,6 @@
 const config = require('./config');
 const userIdFieldName = config.get('UserIdField');
+const logger = require('./logger');
 exports.tokenParser = (content, clientId, debugMode) => {
     const accessToken = content.access_token;
 
