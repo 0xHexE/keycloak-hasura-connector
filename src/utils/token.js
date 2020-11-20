@@ -1,5 +1,6 @@
 const config = require('./config');
 const userIdFieldName = config.get('UserIdField');
+const logger = require('./logger');
 exports.tokenParser = (content, clientId, debugMode) => {
     const accessToken = content.access_token;
 
@@ -52,7 +53,7 @@ const parseGroup = exports.parseGroup = (group, defaultGroup) => {
         if (typeof defaultGroup === 'number' && !isNaN(defaultGroup)) {
             parsedGroup['X-Hasura-Organization-Id'] = rootGroups[defaultGroup];
         } else {
-            console.log('Default organization assigned as first');
+            logger.info('Default organization assigned as first');
             parsedGroup['X-Hasura-Organization-Id'] = rootGroups[0];
         }
     }

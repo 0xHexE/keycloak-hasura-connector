@@ -4,3 +4,4 @@ node_modules
 install-manifests/.env
 src/test_cases.http
 examples/hasura-connector-angular/src/app/utils/kc.ts
+logs/

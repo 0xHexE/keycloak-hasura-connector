@@ -1,39 +1,44 @@
 const app = require('express')();
 const Keycloak = require('keycloak-connect');
-const config = require('./config');
+const config = require('./utils/config');
 const keycloak = new Keycloak({  }, config.get('kcConfig'));
-const { tokenParser } = require('./token');
+const { tokenParser } = require('./utils/token');
 const packageJson = require('../package');
+const logger = require('./utils/logger');
+const httpLogger = require('./middlewares/httpLogger');
 
 const debugMode = config.get('debugMode');
 const AnonymousRole = config.get('AnonymousRole');
 
 if (debugMode) {
-    app.get('*', (res, req, next) => {
-        console.log(res.headers);
+    logger.info('AnonymousRole: ', AnonymousRole);
+    app.use(httpLogger);
+    app.get('*', (req, res, next) => {
+        logger.info('request header: ', req.headers);
         next();
     });
+    
 }
 
-app.get('/', keycloak.middleware(), (res, req) => {
-    if (!res.kauth.grant) {
+app.get('/', keycloak.middleware(), (req, res) => {
+    if (!req.kauth.grant) {
         if(AnonymousRole){
-            return req.status(200)
+            return res.status(200)
             .jsonp({
                  'X-Hasura-Role':AnonymousRole
             });
         }else{
-            return req.sendStatus(401);
+            return res.sendStatus(401);
         }
     }
 
-    const tokenParsed = tokenParser(res.kauth.grant, config.get('kcConfig.clientId'), debugMode);
+    const tokenParsed = tokenParser(req.kauth.grant, config.get('kcConfig.clientId'), debugMode);
 
     if (debugMode) {
-        console.log(tokenParsed);
+        logger.info('tokenParsed: ', tokenParsed);
     }
 
-    return req.status(200)
+    return res.status(200)
         .jsonp({
             ...tokenParsed,
         });
@@ -41,9 +46,9 @@ app.get('/', keycloak.middleware(), (res, req) => {
 
 app.listen(config.get('port'), () => {
     const port = config.get('port');
-    console.log(`Server running on http://localhost:${ port } port`);
-    console.log(`Version ${ packageJson.version }`);
+    logger.info(`Server running on http://localhost:${ port } port`);
+    logger.info(`Version ${ packageJson.version }`);
     if (config.get('debugMode')) {
-        console.log(config.get('kcConfig'));
+        logger.info('kcConfig: ', config.get('kcConfig'));
     }
 });

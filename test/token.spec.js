@@ -1,4 +1,4 @@
-const { tokenParser, parseGroup } = require('../src/token');
+const { tokenParser, parseGroup } = require('../src/utils/token');
 const stubValue = require('./stub.json');
 
 describe('TokenSpec', function () {
