@@ -13,32 +13,32 @@ const AnonymousRole = config.get('AnonymousRole');
 if (debugMode) {
     logger.info('AnonymousRole: ', AnonymousRole);
     app.use(httpLogger);
-    app.get('*', (res, req, next) => {
-        logger.info('request header: ', res.headers);
+    app.get('*', (req, res, next) => {
+        logger.info('request header: ', req.headers);
         next();
     });
     
 }
 
-app.get('/', keycloak.middleware(), (res, req) => {
-    if (!res.kauth.grant) {
+app.get('/', keycloak.middleware(), (req, res) => {
+    if (!req.kauth.grant) {
         if(AnonymousRole){
-            return req.status(200)
+            return res.status(200)
             .jsonp({
                  'X-Hasura-Role':AnonymousRole
             });
         }else{
-            return req.sendStatus(401);
+            return res.sendStatus(401);
         }
     }
 
-    const tokenParsed = tokenParser(res.kauth.grant, config.get('kcConfig.clientId'), debugMode);
+    const tokenParsed = tokenParser(req.kauth.grant, config.get('kcConfig.clientId'), debugMode);
 
     if (debugMode) {
         logger.info('tokenParsed: ', tokenParsed);
     }
 
-    return req.status(200)
+    return res.status(200)
         .jsonp({
             ...tokenParsed,
         });
