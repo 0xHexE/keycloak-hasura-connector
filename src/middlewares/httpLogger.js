@@ -5,7 +5,7 @@ logger.stream = {
   write: message => logger.info(message.substring(0, message.lastIndexOf('\n')))
 };
 
-morgan.token('host', function getId (req) {
+morgan.token('host', (req)=> {
   return req.hostname
 })
 
