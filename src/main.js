@@ -11,6 +11,7 @@ const debugMode = config.get('debugMode');
 const AnonymousRole = config.get('AnonymousRole');
 
 if (debugMode) {
+    logger.info('AnonymousRole: ', AnonymousRole);
     app.use(httpLogger);
     app.get('*', (res, req, next) => {
         logger.info('request header: ', res.headers);

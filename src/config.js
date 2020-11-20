@@ -24,7 +24,7 @@ const config = convict({
     AnonymousRole: {
         doc: 'AnonymousRole used if the user not loged in',
         format: String,
-        default: null,
+        default: '',
         env: 'ANONYMOUS_ROLE',
     },
     UserIdField: {
