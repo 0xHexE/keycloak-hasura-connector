@@ -17,8 +17,12 @@ if (debugMode) {
         logger.info('request header: ', req.headers);
         next();
     });
-    
+
 }
+
+app.get('/_health', (req, res) => {
+  res.send({'status': 'ok'}); // Simple health endpoint so kubernetes/other know that service is up and running
+});
 
 app.get('/', keycloak.middleware(), (req, res) => {
     if (!req.kauth.grant) {
