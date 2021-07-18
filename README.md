@@ -1,3 +1,9 @@
+<h1>Recommended alternative https://github.com/hasura/graphql-engine/issues/1779#issuecomment-673875091</h1>
+
+<br/>
+<br/>
+<br/>
+
 <p align="center">
   <a href="https://github.com/httpsOmkar/keycloak-hasura-connector">
     <img src="logo.png" width="250px" alt="Keycloak Hasura Connector" />
