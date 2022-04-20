@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/httpsOmkar/sanwad-back#readme",
   "dependencies": {
-    "convict": "^4.4.1",
+    "convict": "^6.2.2",
     "express": "^4.16.4",
     "keycloak-connect": "^4.8.3",
     "morgan": "^1.10.0",
